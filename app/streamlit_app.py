@@ -1,7 +1,7 @@
 """
-Scalable Market Basket Analysis & Explainable AI (XAI) Intelligence Platform.
-Streamlit application featuring Admin/User authentication, ultra-modern dynamic UI,
-Apriori vs FP-Growth algorithm comparison, XAI rule attributions, and cross-sell lookup tool.
+Enterprise-Grade Market Basket Analytics & Explainable AI (XAI) Intelligence Platform.
+Streamlit application featuring Plotly 3D visualizers, dynamic neon glassmorphism UI,
+Apriori vs FP-Growth step-by-step algorithm explainer, XAI attributions, and cross-sell engines.
 """
 
 import os
@@ -13,6 +13,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 import networkx as nx
+import plotly.express as px
+import plotly.graph_objects as go
 
 # Ensure project root in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -23,10 +25,11 @@ from src.rule_generator import generate_rules, identify_misleading_rules
 from src.insights import generate_business_insights, get_retail_action_plan, run_country_segment_analysis
 from src.network_graph import build_product_network
 from src.xai_explainer import explain_rule_xai, generate_xai_breakdown_table
+from src.algo_explainer import get_apriori_step_explanation, get_fpgrowth_step_explanation, get_algorithm_comparison_matrix
 
 # Page Configuration
 st.set_page_config(
-    page_title="Market Basket AI & XAI Cross-Sell Engine",
+    page_title="Market Basket AI & XAI Intelligence Platform",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -35,17 +38,17 @@ st.set_page_config(
 # Custom Ultra-Modern Neon Glassmorphism CSS
 st.markdown("""
 <style>
-    /* Global Background & Typography */
+    /* Global Page Styling */
     .stApp {
-        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-        color: #f8fafc;
+        background: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #0b0f19 100%);
+        color: #f1f5f9;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
     
     /* Header Gradient & Glow */
     .hero-title {
-        font-size: 2.6rem;
-        font-weight: 800;
+        font-size: 2.8rem;
+        font-weight: 900;
         background: linear-gradient(90deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -60,25 +63,24 @@ st.markdown("""
     
     /* Dynamic Glassmorphic Metric Cards */
     .glass-card {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(17, 24, 39, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 16px;
         padding: 1.4rem;
         text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
     .glass-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(56, 189, 248, 0.4);
-        box-shadow: 0 12px 40px 0 rgba(56, 189, 248, 0.2);
+        transform: translateY(-6px);
+        border-color: rgba(56, 189, 248, 0.5);
+        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.25);
     }
     .metric-value {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #f8fafc;
+        font-size: 2.2rem;
+        font-weight: 900;
         background: linear-gradient(90deg, #38bdf8, #818cf8);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -87,41 +89,47 @@ st.markdown("""
         font-size: 0.85rem;
         color: #94a3b8;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.2px;
         margin-top: 0.3rem;
-        font-weight: 600;
+        font-weight: 700;
     }
 
-    /* XAI Recommendation Card */
-    .xai-card {
-        background: rgba(15, 23, 42, 0.85);
-        border-left: 5px solid #38bdf8;
+    /* Algorithm Card */
+    .algo-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 1.2rem;
         margin-bottom: 1rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
-    
+    .algo-card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #38bdf8;
+        margin-bottom: 0.5rem;
+    }
+
     /* Role Badges */
     .role-badge-admin {
         background: linear-gradient(90deg, #ef4444, #f97316);
         color: white;
-        padding: 4px 12px;
+        padding: 4px 14px;
         border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 700;
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
     }
     .role-badge-user {
         background: linear-gradient(90deg, #10b981, #06b6d4);
         color: white;
-        padding: 4px 12px;
+        padding: 4px 14px;
         border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 700;
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
     }
 </style>
 """, unsafe_allow_html=True)
-
 
 # Session State Authentication Initialization
 if "authenticated" not in st.session_state:
@@ -167,13 +175,13 @@ def login_screen():
     """Render sleek modern glassmorphism login portal."""
     st.markdown('<div style="text-align: center; margin-top: 2rem;">', unsafe_allow_html=True)
     st.markdown('<div class="hero-title">⚡ Market Basket AI Platform</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">Authenticating Portal — Enterprise Cross-Selling Intelligence</div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero-subtitle">Enterprise Cross-Selling Intelligence & Explainable AI Engine</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([1, 1.5, 1])
     with col2:
         st.markdown('<div class="glass-card" style="text-align: left; padding: 2rem;">', unsafe_allow_html=True)
-        st.subheader("🔐 Sign In")
+        st.subheader("🔐 Sign In to Analytics Portal")
         
         login_tab1, login_tab2 = st.tabs(["🔑 Password Login", "⚡ Quick Demo Access"])
         
@@ -198,12 +206,12 @@ def login_screen():
         with login_tab2:
             st.caption("Select a role for immediate access:")
             c_a, c_u = st.columns(2)
-            if c_a.button("⚡ Login as Admin", use_container_width=True):
+            if c_a.button("⚡ Login as Admin Mode", use_container_width=True):
                 st.session_state.authenticated = True
                 st.session_state.user_role = "Admin"
                 st.session_state.username = "Admin Demo"
                 st.rerun()
-            if c_u.button("👤 Login as User", use_container_width=True):
+            if c_u.button("👤 Login as User Mode", use_container_width=True):
                 st.session_state.authenticated = True
                 st.session_state.user_role = "User"
                 st.session_state.username = "User Demo"
@@ -249,7 +257,7 @@ def main():
     min_lift = st.sidebar.slider("Min Lift (min_lift)", 1.0, 30.0, 1.2, step=0.5)
     max_len = st.sidebar.slider("Max Itemset Length", 2, 5, 4, disabled=(st.session_state.user_role != "Admin"))
 
-    with st.spinner("Mining patterns & computing XAI attributions..."):
+    with st.spinner("Mining patterns, generating 3D Plotly visualizers & XAI attributions..."):
         rules_df, frequent_itemsets, misleading_df, total_baskets = run_mining_cached(
             df_clean, country_filter, min_support, min_confidence, min_lift, max_len
         )
@@ -257,8 +265,10 @@ def main():
     # Main Navigation Tabs
     tabs = st.tabs([
         "📊 Executive Dashboard",
-        "⚖️ Algorithm Comparison (Apriori vs FP-Growth)",
-        "🧠 Explainable AI (XAI) Rule Breakdown",
+        "🌌 Interactive 3D Rule Plotly Visualizer",
+        "⚙️ Algorithm Master Class (Apriori vs FP-Growth)",
+        "🧠 Explainable AI (XAI) Rule Attribution",
+        "🔥 Product Affinity Heatmap Matrix",
         "⚡ Association Rules Explorer",
         "🌐 Product Network Graph",
         "🎯 Cross-Sell Recommender",
@@ -267,7 +277,7 @@ def main():
 
     # --- TAB 1: EXECUTIVE DASHBOARD ---
     with tabs[0]:
-        st.subheader("System Highlights & Metric Cards")
+        st.subheader("System Overview & Metric Cards")
         m1, m2, m3, m4, m5 = st.columns(5)
         with m1:
             st.markdown(f'<div class="glass-card"><div class="metric-value">{total_baskets:,}</div><div class="metric-label">Total Invoices</div></div>', unsafe_allow_html=True)
@@ -283,120 +293,156 @@ def main():
         st.markdown("<br>", unsafe_allow_html=True)
         c_l, c_r = st.columns(2)
         with c_l:
-            st.subheader("Top 15 Best-Selling Products (Volume)")
-            top_freq = df_clean["Description"].value_counts().head(15)
-            fig, ax = plt.subplots(figsize=(8, 5))
-            fig.patch.set_facecolor('#0f172a')
-            ax.set_facecolor('#1e293b')
-            sns.barplot(x=top_freq.values, y=top_freq.index, palette="viridis", ax=ax)
-            ax.tick_params(colors='white')
-            ax.xaxis.label.set_color('white')
-            ax.yaxis.label.set_color('white')
-            st.pyplot(fig)
+            st.subheader("Top 15 Products by Purchase Volume")
+            top_freq = df_clean["Description"].value_counts().head(15).reset_index()
+            top_freq.columns = ["Product", "Volume"]
+            fig_freq = px.bar(top_freq, x="Volume", y="Product", orientation="h", color="Volume",
+                              color_continuous_scale="Viridis", title="Top Selling Products by Transactions")
+            fig_freq.update_layout(template="plotly_dark", height=450, yaxis={"autorange": "reversed"})
+            st.plotly_chart(fig_freq, use_container_width=True)
 
         with c_r:
-            st.subheader("Top 15 Products by Revenue (£)")
+            st.subheader("Top 15 Products by Generated Revenue (£)")
             df_clean["Revenue"] = df_clean["Quantity"] * df_clean["Price"]
-            top_rev = df_clean.groupby("Description")["Revenue"].sum().sort_values(ascending=False).head(15)
-            fig, ax = plt.subplots(figsize=(8, 5))
-            fig.patch.set_facecolor('#0f172a')
-            ax.set_facecolor('#1e293b')
-            sns.barplot(x=top_rev.values, y=top_rev.index, palette="magma", ax=ax)
-            ax.tick_params(colors='white')
-            ax.xaxis.label.set_color('white')
-            ax.yaxis.label.set_color('white')
-            st.pyplot(fig)
+            top_rev = df_clean.groupby("Description")["Revenue"].sum().sort_values(ascending=False).head(15).reset_index()
+            top_rev.columns = ["Product", "Revenue"]
+            fig_rev = px.bar(top_rev, x="Revenue", y="Product", orientation="h", color="Revenue",
+                             color_continuous_scale="Magma", title="Top Products by Revenue (£)")
+            fig_rev.update_layout(template="plotly_dark", height=450, yaxis={"autorange": "reversed"})
+            st.plotly_chart(fig_rev, use_container_width=True)
 
-    # --- TAB 2: ALGORITHM COMPARISON (APRIORI vs FP-GROWTH) ---
+    # --- TAB 2: INTERACTIVE 3D RULE PLOTLY VISUALIZER ---
     with tabs[1]:
-        st.subheader("⚖️ Algorithmic Performance Benchmark: Apriori vs FP-Growth")
-        st.write("Comparing candidate generation ($C_k$) versus tree-based pattern growth (FP-Tree).")
+        st.subheader("🌌 Interactive 3D Rule Scatter Plot (Support vs Confidence vs Lift)")
+        st.write("Rotate, zoom, and inspect every mined rule in 3D space. X = Support, Y = Confidence, Z = Lift.")
         
-        bench_data = [
-            {"min_support": 0.015, "frequent_itemsets": 493, "apriori_time_sec": 0.187, "fpgrowth_time_sec": 24.27, "fp_ram_mb": 306.79},
-            {"min_support": 0.020, "frequent_itemsets": 270, "apriori_time_sec": 0.114, "fpgrowth_time_sec": 9.32, "fp_ram_mb": 306.72},
-            {"min_support": 0.030, "frequent_itemsets": 91, "apriori_time_sec": 0.053, "fpgrowth_time_sec": 1.84, "fp_ram_mb": 306.71},
-            {"min_support": 0.050, "frequent_itemsets": 20, "apriori_time_sec": 0.025, "fpgrowth_time_sec": 0.52, "fp_ram_mb": 306.71},
-        ]
-        b_df = pd.DataFrame(bench_data)
-        st.dataframe(b_df, use_container_width=True)
-        
-        b_col1, b_col2 = st.columns(2)
-        with b_col1:
-            st.markdown("""
-            <div class="glass-card" style="text-align: left;">
-                <h4>🐢 Apriori Algorithm</h4>
-                <p>• <b>Mechanism:</b> Level-wise search with candidate generation ($C_k$).</p>
-                <p>• <b>Scans:</b> Requires $k$ full database scans for length $k$.</p>
-                <p>• <b>Bottleneck:</b> Combinatorial candidate explosion at lower support values.</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with b_col2:
-            st.markdown("""
-            <div class="glass-card" style="text-align: left;">
-                <h4>🐆 FP-Growth Algorithm</h4>
-                <p>• <b>Mechanism:</b> In-memory trie structure (FP-Tree) with Header Table.</p>
-                <p>• <b>Scans:</b> Exactly <b>2 database scans</b> total.</p>
-                <p>• <b>Advantage:</b> Zero candidate generation ($C_k$), scaling seamlessly to big data.</p>
-            </div>
-            """, unsafe_allow_html=True)
+        if not rules_df.empty:
+            fig_3d = px.scatter_3d(
+                rules_df,
+                x="support",
+                y="confidence",
+                z="lift",
+                color="lift",
+                size="support",
+                hover_data=["antecedents_str", "consequents_str"],
+                color_continuous_scale="Turbo",
+                title="3D Association Rule Topology Map"
+            )
+            fig_3d.update_layout(template="plotly_dark", height=700)
+            st.plotly_chart(fig_3d, use_container_width=True)
+        else:
+            st.warning("No rules mined to render 3D visualizer.")
 
-    # --- TAB 3: EXPLAINABLE AI (XAI) RULE BREAKDOWN ---
+    # --- TAB 3: ALGORITHM MASTER CLASS (APRIORI vs FP-GROWTH) ---
     with tabs[2]:
-        st.subheader("🧠 Explainable AI (XAI) — Rule Attribution & Breakdown")
-        st.write("Understand *WHY* the AI model generated each recommendation by decomposing Lift into Base Probability $P(C)$ and Behavior Boost Gain.")
-        
+        st.subheader("⚙️ Algorithm Master Class: Apriori vs FP-Growth Under the Hood")
+        st.write("Understand the exact step-by-step internal mechanisms of both frequent pattern mining algorithms.")
+
+        comp_matrix = get_algorithm_comparison_matrix()
+        st.dataframe(comp_matrix, use_container_width=True)
+
+        a_col1, a_col2 = st.columns(2)
+        with a_col1:
+            st.markdown("### 🐢 Apriori Step-by-Step Flow")
+            ap_steps = get_apriori_step_explanation()
+            for step in ap_steps:
+                st.markdown(f"""
+                <div class="algo-card">
+                    <div class="algo-card-title">{step['step']}</div>
+                    <p><b>{step['title']}</b></p>
+                    <p>• {step['action']}</p>
+                    <p><code>Formula: {step['formula']}</code></p>
+                    <p><small style="color: #f97316;">Complexity Impact: {step['complexity']}</small></p>
+                </div>
+                """, unsafe_allow_html=True)
+
+        with a_col2:
+            st.markdown("### 🐆 FP-Growth Step-by-Step Flow")
+            fp_steps = get_fpgrowth_step_explanation()
+            for step in fp_steps:
+                st.markdown(f"""
+                <div class="algo-card">
+                    <div class="algo-card-title">{step['step']}</div>
+                    <p><b>{step['title']}</b></p>
+                    <p>• {step['action']}</p>
+                    <p><code>Structure: {step['structure']}</code></p>
+                    <p><small style="color: #10b981;">Complexity Impact: {step['complexity']}</small></p>
+                </div>
+                """, unsafe_allow_html=True)
+
+    # --- TAB 4: EXPLAINABLE AI (XAI) RULE ATTRIBUTION ---
+    with tabs[3]:
+        st.subheader("🧠 Explainable AI (XAI) — Feature Attribution & Why Rules Occur")
+        st.write("Deconstruct *WHY* the AI model identified a rule by comparing Base Support $P(C)$ against Behavior Boost Gain $+(\text{Confidence} - P(C))$.")
+
         if not rules_df.empty:
             xai_df = generate_xai_breakdown_table(rules_df.head(15))
             st.dataframe(xai_df, use_container_width=True)
-            
+
             st.markdown("---")
-            st.subheader("🔍 Deep-Dive XAI Rule Explainer")
-            selected_rule_idx = st.selectbox("Select Rule to Explain in Plain English:", range(len(rules_df.head(10))),
+            st.subheader("📊 Interactive XAI Waterfall Attribution Breakdown")
+            selected_rule_idx = st.selectbox("Select Rule to Deconstruct:", range(len(rules_df.head(10))),
                                              format_func=lambda i: rules_df.iloc[i]["rule_str"])
             
             exp_data = explain_rule_xai(rules_df.iloc[selected_rule_idx])
             
-            st.markdown(f"""
-            <div class="xai-card">
-                <h3>Rule: <span style="color: #38bdf8;">{exp_data['rule_str']}</span></h3>
-                <p style="font-size: 1.1rem;">{exp_data['natural_explanation']}</p>
-                <br/>
-                <div style="display: flex; justify-content: space-around;">
-                    <div><b>Base Rate P(C):</b> {exp_data['base_probability_pct']}%</div>
-                    <div><b>Confidence P(C|A):</b> {exp_data['conditional_confidence_pct']}%</div>
-                    <div><b>XAI Boost Gain:</b> <span style="color: #10b981;">+{exp_data['confidence_gain_pct']}%</span></div>
-                    <div><b>Lift Score:</b> <span style="color: #c084fc;">{exp_data['lift_multiplier']}x</span></div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            fig_waterfall = go.Figure(go.Waterfall(
+                name="XAI Attribution",
+                orientation="v",
+                measure=["relative", "relative", "total"],
+                x=["Base Rate P(C)", "Behavior Boost Gain", "Final Confidence P(C|A)"],
+                y=[exp_data["base_probability_pct"], exp_data["confidence_gain_pct"], exp_data["conditional_confidence_pct"]],
+                connector={"line": {"color": "rgb(63, 63, 63)"}},
+                decreasing={"marker": {"color": "#ef4444"}},
+                increasing={"marker": {"color": "#10b981"}},
+                totals={"marker": {"color": "#38bdf8"}}
+            ))
+            fig_waterfall.update_layout(title=f"XAI Waterfall Attribution for: {exp_data['rule_str']}", template="plotly_dark", height=450)
+            st.plotly_chart(fig_waterfall, use_container_width=True)
         else:
-            st.warning("No rules mined to perform XAI breakdown.")
+            st.warning("No rules available for XAI deconstruction.")
 
-    # --- TAB 4: ASSOCIATION RULES EXPLORER ---
-    with tabs[3]:
-        st.subheader("⚡ Interactive Association Rules Explorer")
-        st.write(f"Mined **{len(rules_df):,}** association rules.")
+    # --- TAB 5: PRODUCT AFFINITY HEATMAP MATRIX ---
+    with tabs[4]:
+        st.subheader("🔥 Product Co-Occurrence Affinity Heatmap Matrix")
+        st.write("Matrix showing co-occurrence intensity (Lift scores) between top pairs of products.")
+
+        if not rules_df.empty:
+            top_pairs_rules = rules_df[rules_df["antecedents_str"].str.find(",") == -1]
+            top_pairs_rules = top_pairs_rules[top_pairs_rules["consequents_str"].str.find(",") == -1].head(15)
+            
+            if not top_pairs_rules.empty:
+                pivot_matrix = top_pairs_rules.pivot(index="antecedents_str", columns="consequents_str", values="lift").fillna(0)
+                fig_hm = px.imshow(pivot_matrix, color_continuous_scale="Plasma", title="Product Lift Co-Occurrence Matrix")
+                fig_hm.update_layout(template="plotly_dark", height=600)
+                st.plotly_chart(fig_hm, use_container_width=True)
+            else:
+                st.info("No 1-to-1 product pairs match current Lift filter for matrix plot.")
+        else:
+            st.warning("No rules available to build matrix.")
+
+    # --- TAB 6: ASSOCIATION RULES EXPLORER ---
+    with tabs[5]:
+        st.subheader("⚡ Association Rules Explorer & CSV Exporter")
         if not rules_df.empty:
             sorted_rules = rules_df.sort_values(by="lift", ascending=False)
             st.dataframe(sorted_rules[["rule_str", "support", "confidence", "lift", "conviction", "leverage"]], use_container_width=True)
             csv_data = sorted_rules.to_csv(index=False).encode('utf-8')
-            st.download_button("📥 Download Association Rules (CSV)", data=csv_data, file_name="mined_association_rules.csv", mime="text/csv")
-        
+            st.download_button("📥 Export Mined Rules (CSV)", data=csv_data, file_name="mined_association_rules.csv", mime="text/csv")
         if not misleading_df.empty:
-            st.subheader("⚠️ Spurious / Misleading Rules (Lift ≈ 1.0 Pruned)")
+            st.subheader("⚠️ Pruned Spurious Rules (Lift ≈ 1.0 Filtered)")
             st.dataframe(misleading_df[["rule_str", "confidence", "consequent support", "lift", "explanation"]], use_container_width=True)
 
-    # --- TAB 5: PRODUCT NETWORK GRAPH ---
-    with tabs[4]:
+    # --- TAB 7: PRODUCT NETWORK GRAPH ---
+    with tabs[6]:
         st.subheader("🌐 Product Co-Occurrence Network Graph")
         if not rules_df.empty:
             min_graph_lift = st.slider("Filter Edges by Min Lift", float(min_lift), 25.0, max(float(min_lift), 2.0), step=0.5)
             G = build_product_network(rules_df, min_lift=min_graph_lift, max_edges=35)
             if G.number_of_nodes() > 0:
                 fig, ax = plt.subplots(figsize=(12, 8))
-                fig.patch.set_facecolor('#0f172a')
-                ax.set_facecolor('#0f172a')
+                fig.patch.set_facecolor('#0b0f19')
+                ax.set_facecolor('#0b0f19')
                 pos = nx.spring_layout(G, k=0.7, seed=42)
                 degrees = dict(G.degree())
                 node_sizes = [v * 250 + 350 for v in degrees.values()]
@@ -405,14 +451,14 @@ def main():
                 edge_widths = [((w / max_w) ** 1.5) * 3.5 + 1.0 for w in weights]
                 
                 nx.draw_networkx_nodes(G, pos, node_size=node_sizes, node_color="#38bdf8", alpha=0.85, ax=ax)
-                nx.draw_networkx_edges(G, pos, width=edge_widths, edge_color="#ec4899", alpha=0.6, arrowstyle="-|>", arrowsize=14, ax=ax)
+                nx.draw_networkx_edges(G, pos, width=edge_widths, edge_color="#c084fc", alpha=0.6, arrowstyle="-|>", arrowsize=14, ax=ax)
                 labels = {node: node[:22] + "..." if len(node) > 22 else node for node in G.nodes()}
                 nx.draw_networkx_labels(G, pos, labels=labels, font_size=8, font_color="white", font_weight="bold", ax=ax)
                 plt.axis("off")
                 st.pyplot(fig)
 
-    # --- TAB 6: CROSS-SELL RECOMMENDER ---
-    with tabs[5]:
+    # --- TAB 8: CROSS-SELL RECOMMENDER ---
+    with tabs[7]:
         st.subheader("🎯 Pick a Product — Interactive Cross-Sell Engine")
         catalog = sorted(df_clean["Description"].unique().tolist())
         selected_product = st.selectbox("Target Product in Cart:", catalog, index=0)
@@ -423,7 +469,7 @@ def main():
                 top_recs = matched_rules.sort_values(by="lift", ascending=False).head(5)
                 for idx, row in top_recs.reset_index().iterrows():
                     st.markdown(f"""
-                    <div class="xai-card">
+                    <div class="glass-card" style="text-align: left; margin-bottom: 1rem;">
                         <h4>🎁 Recommended Cross-Sell #{idx+1}: <span style="color: #38bdf8;">{row['consequents_str']}</span></h4>
                         <p>• <b>Lift Boost:</b> {row['lift']:.2f}x higher likelihood than random chance</p>
                         <p>• <b>Confidence:</b> {row['confidence']*100:.1f}% of target buyers also purchase this item</p>
@@ -433,8 +479,8 @@ def main():
             else:
                 st.info(f"No direct rules for '{selected_product}' under current thresholds. Try lowering min_support.")
 
-    # --- TAB 7: STRATEGY ACTION PLAN ---
-    with tabs[6]:
+    # --- TAB 9: STRATEGY ACTION PLAN ---
+    with tabs[8]:
         st.subheader("💡 Concrete Supermarket Strategy Actions")
         if not rules_df.empty:
             actions = get_retail_action_plan(rules_df)

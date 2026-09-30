@@ -1,0 +1,12 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.DS_Store
+
+# Data Files (Keep structure, ignore massive binaries if needed)
+data/raw/
+*.xlsx

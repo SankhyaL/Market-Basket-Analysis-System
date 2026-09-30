@@ -1,0 +1,38 @@
+# Market Basket Analysis Configuration
+
+paths:
+  raw_data: "online_retail_II.xlsx"
+  cleaned_data_parquet: "data/processed/cleaned_transactions.parquet"
+  cleaned_data_csv: "data/processed/cleaned_transactions.csv"
+  reports_dir: "reports"
+  eda_dir: "reports/eda"
+
+mining:
+  min_support: 0.02
+  min_confidence: 0.3
+  min_lift: 1.2
+  max_len: 4
+  test_supports: [0.01, 0.02, 0.03, 0.05]
+
+scalability:
+  chunk_size: 50000
+  sample_ratio: 0.1
+
+cleaning:
+  remove_cancelled: true
+  min_quantity: 1
+  min_price: 0.01
+  non_product_codes:
+    - "POST"
+    - "PADS"
+    - "M"
+    - "DOT"
+    - "C2"
+    - "BANK CHARGES"
+    - "TEST001"
+    - "TEST002"
+    - "ADJUST"
+    - "ADJUST2"
+    - "AMAZONFEE"
+    - "CRUK"
+    - "D"

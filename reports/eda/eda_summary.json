@@ -1,0 +1,31 @@
+{
+  "basket_stats": {
+    "total_invoices": 3951,
+    "mean_basket_size": 24.79,
+    "median_basket_size": 15.0,
+    "min_basket_size": 1,
+    "max_basket_size": 686,
+    "p95_basket_size": 71
+  },
+  "top_5_items_freq": {
+    "WHITE HANGING HEART T-LIGHT HOLDER": 569,
+    "REGENCY CAKESTAND 3 TIER": 389,
+    "JUMBO BAG RED RETROSPOT": 345,
+    "ASSORTED COLOUR BIRD ORNAMENT": 278,
+    "PARTY BUNTING": 264
+  },
+  "top_5_items_revenue": {
+    "REGENCY CAKESTAND 3 TIER": 32091.57,
+    "WHITE HANGING HEART T-LIGHT HOLDER": 22634.6,
+    "JUMBO BAG RED RETROSPOT": 13862.58,
+    "PARTY BUNTING": 13154.07,
+    "ASSORTED COLOUR BIRD ORNAMENT": 12960.08
+  },
+  "top_5_countries_invoices": {
+    "United Kingdom": 3615,
+    "Germany": 85,
+    "EIRE": 60,
+    "France": 60,
+    "Netherlands": 17
+  }
+}

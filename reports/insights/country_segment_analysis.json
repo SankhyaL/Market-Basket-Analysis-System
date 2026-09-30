@@ -1,0 +1,130 @@
+{
+  "United Kingdom": {
+    "total_baskets": 3615,
+    "min_support_used": 0.02,
+    "rules_mined": 53,
+    "top_5_rules": [
+      {
+        "rule": "GREEN REGENCY TEACUP AND SAUCER  ==>  PINK REGENCY TEACUP AND SAUCER",
+        "confidence": 0.6311,
+        "lift": 23.7666
+      },
+      {
+        "rule": "PINK REGENCY TEACUP AND SAUCER  ==>  GREEN REGENCY TEACUP AND SAUCER",
+        "confidence": 0.8021,
+        "lift": 23.7666
+      },
+      {
+        "rule": "GREEN REGENCY TEACUP AND SAUCER  ==>  ROSES REGENCY TEACUP AND SAUCER",
+        "confidence": 0.7705,
+        "lift": 22.2826
+      },
+      {
+        "rule": "ROSES REGENCY TEACUP AND SAUCER  ==>  GREEN REGENCY TEACUP AND SAUCER",
+        "confidence": 0.752,
+        "lift": 22.2826
+      },
+      {
+        "rule": "VINTAGE HEADS AND TAILS CARD GAME  ==>  VINTAGE SNAP CARDS",
+        "confidence": 0.6667,
+        "lift": 13.8506
+      }
+    ]
+  },
+  "Germany": {
+    "total_baskets": 85,
+    "min_support_used": 0.03,
+    "rules_mined": 1565,
+    "top_5_rules": [
+      {
+        "rule": "RED RETROSPOT BOWL, RED RETROSPOT MINI CASES  ==>  RED RETROSPOT PLATE, RED RETROSPOT SHOPPER BAG",
+        "confidence": 1.0,
+        "lift": 28.3333
+      },
+      {
+        "rule": "SET/20 RED RETROSPOT PAPER NAPKINS  ==>  RED RETROSPOT PLATE, SET/6 RED SPOTTY PAPER CUPS",
+        "confidence": 1.0,
+        "lift": 28.3333
+      },
+      {
+        "rule": "RED STRIPE CERAMIC DRAWER KNOB, WHITE SPOT RED CERAMIC DRAWER KNOB  ==>  RED SPOT CERAMIC DRAWER KNOB",
+        "confidence": 1.0,
+        "lift": 28.3333
+      },
+      {
+        "rule": "RED RETROSPOT PLATE, SET/6 RED SPOTTY PAPER PLATES  ==>  SET/20 RED RETROSPOT PAPER NAPKINS",
+        "confidence": 1.0,
+        "lift": 28.3333
+      },
+      {
+        "rule": "FELTCRAFT 6 FLOWER FRIENDS, RED RETROSPOT BOWL, RED RETROSPOT MINI CASES  ==>  RED RETROSPOT SHOPPER BAG",
+        "confidence": 1.0,
+        "lift": 28.3333
+      }
+    ]
+  },
+  "France": {
+    "total_baskets": 60,
+    "min_support_used": 0.03,
+    "rules_mined": 256450,
+    "top_5_rules": [
+      {
+        "rule": "LUNCH BOX WITH CUTLERY RETROSPOT, TRADITIONAL MODELLING CLAY  ==>  RED RETROSPOT SMALL MILK JUG",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "MINI JIGSAW CIRCUS PARADE, ROSES REGENCY TEACUP AND SAUCER  ==>  MINI JIGSAW SPACEBOY, RED RETROSPOT TRADITIONAL TEAPOT",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "MINI JIGSAW CIRCUS PARADE, RED RETROSPOT TRADITIONAL TEAPOT  ==>  LUNCH BOX WITH CUTLERY RETROSPOT, ROSES REGENCY TEACUP AND SAUCER",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "LUNCH BOX WITH CUTLERY RETROSPOT, ROSES REGENCY TEACUP AND SAUCER  ==>  MINI JIGSAW CIRCUS PARADE, RED RETROSPOT TRADITIONAL TEAPOT",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "MINI JIGSAW CIRCUS PARADE, ROSES REGENCY TEACUP AND SAUCER  ==>  LUNCH BOX WITH CUTLERY RETROSPOT, RED RETROSPOT TRADITIONAL TEAPOT",
+        "confidence": 1.0,
+        "lift": 30.0
+      }
+    ]
+  },
+  "EIRE": {
+    "total_baskets": 60,
+    "min_support_used": 0.03,
+    "rules_mined": 93070,
+    "top_5_rules": [
+      {
+        "rule": "BAKING SET 9 PIECE RETROSPOT, COOK WITH WINE METAL SIGN, SPACEBOY TV DINNER TRAY  ==>  TV DINNER TRAY DOLLY GIRL",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "LADYBIRD + BEE RAFFIA FOOD COVER, RIBBON REEL HEARTS DESIGN  ==>  PACK OF 72 RETRO SPOT CAKE CASES, WHITE SPOT BLUE CERAMIC DRAWER KNOB",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "PAPER BUNTING WHITE LACE, WHITE SPOT BLUE CERAMIC DRAWER KNOB  ==>  RIBBON REEL HEARTS DESIGN, WHITE WIRE EGG HOLDER",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "LADYBIRD + BEE RAFFIA FOOD COVER, WHITE SPOT BLUE CERAMIC DRAWER KNOB  ==>  RIBBON REEL HEARTS DESIGN, WHITE WIRE EGG HOLDER",
+        "confidence": 1.0,
+        "lift": 30.0
+      },
+      {
+        "rule": "LADYBIRD + BEE RAFFIA FOOD COVER, RIBBON REEL HEARTS DESIGN  ==>  WHITE SPOT BLUE CERAMIC DRAWER KNOB, WHITE WIRE EGG HOLDER",
+        "confidence": 1.0,
+        "lift": 30.0
+      }
+    ]
+  }
+}

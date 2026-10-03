@@ -125,5 +125,5 @@ if __name__ == "__main__":
     print(top_lift[cols_show].head(10).to_string(index=False))
     
     if not misleading.empty:
-        print("\n--- MISLEADING RULES DETECTED (High Confidence, Lift ≈ 1.0) ---")
+        print("\n--- MISLEADING RULES DETECTED (High Confidence, Lift ~= 1.0) ---")
         print(misleading[["rule_str", "confidence", "consequent support", "lift", "explanation"]].head(5).to_string(index=False))

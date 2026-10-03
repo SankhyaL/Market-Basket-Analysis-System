@@ -96,9 +96,9 @@ def run_full_pipeline(args):
         if os.path.exists("data/processed/cleaned_transactions.csv"):
             batch_proc.process_csv_chunks("data/processed/cleaned_transactions.csv")
 
-    logging.info("🎉 Full Market Basket Analysis Pipeline Completed Successfully!")
+    logging.info("Full Market Basket Analysis Pipeline Completed Successfully!")
     print("\n=======================================================")
-    print(f"📊 SUMMARY: Mined {len(rules):,} Rules across {len(baskets):,} Invoices.")
+    print(f"SUMMARY: Mined {len(rules):,} Rules across {len(baskets):,} Invoices.")
     print("=======================================================\n")
 
 

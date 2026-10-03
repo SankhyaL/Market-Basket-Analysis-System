@@ -47,7 +47,7 @@ st.markdown("""
     
     /* Header Gradient & Glow */
     .hero-title {
-        font-size: 2.8rem;
+        font-size: 2.6rem;
         font-weight: 900;
         background: linear-gradient(90deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
         -webkit-background-clip: text;
@@ -57,25 +57,25 @@ st.markdown("""
     }
     .hero-subtitle {
         font-size: 1.15rem;
-        color: #94a3b8;
+        color: #cbd5e1;
         margin-bottom: 1.5rem;
     }
     
     /* Dynamic Glassmorphic Metric Cards */
     .glass-card {
-        background: rgba(17, 24, 39, 0.75);
+        background: rgba(17, 24, 39, 0.85);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 16px;
         padding: 1.4rem;
         text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
     .glass-card:hover {
-        transform: translateY(-6px);
-        border-color: rgba(56, 189, 248, 0.5);
+        transform: translateY(-4px);
+        border-color: rgba(56, 189, 248, 0.6);
         box-shadow: 0 12px 40px rgba(56, 189, 248, 0.25);
     }
     .metric-value {
@@ -87,7 +87,7 @@ st.markdown("""
     }
     .metric-label {
         font-size: 0.85rem;
-        color: #94a3b8;
+        color: #cbd5e1;
         text-transform: uppercase;
         letter-spacing: 1.2px;
         margin-top: 0.3rem;
@@ -96,14 +96,15 @@ st.markdown("""
 
     /* Algorithm Card */
     .algo-card {
-        background: rgba(30, 41, 59, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 12px;
         padding: 1.2rem;
         margin-bottom: 1rem;
+        color: #e2e8f0;
     }
     .algo-card-title {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         font-weight: 700;
         color: #38bdf8;
         margin-bottom: 0.5rem;
@@ -118,6 +119,7 @@ st.markdown("""
         font-size: 0.85rem;
         font-weight: 800;
         letter-spacing: 0.5px;
+        display: inline-block;
     }
     .role-badge-user {
         background: linear-gradient(90deg, #10b981, #06b6d4);
@@ -127,6 +129,145 @@ st.markdown("""
         font-size: 0.85rem;
         font-weight: 800;
         letter-spacing: 0.5px;
+        display: inline-block;
+    }
+
+    /* --- ENHANCED TAB STYLING (High Visibility) --- */
+    div[data-baseweb="tab-list"] {
+        background: rgba(15, 23, 42, 0.8) !important;
+        border-radius: 12px !important;
+        padding: 6px !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        gap: 6px !important;
+    }
+    button[data-baseweb="tab"] {
+        background: transparent !important;
+        color: #cbd5e1 !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        transition: all 0.2s ease !important;
+        border: none !important;
+    }
+    button[data-baseweb="tab"]:hover {
+        background: rgba(56, 189, 248, 0.15) !important;
+        color: #38bdf8 !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(129, 140, 248, 0.25)) !important;
+        color: #38bdf8 !important;
+        font-weight: 800 !important;
+        border-bottom: 2px solid #38bdf8 !important;
+    }
+    button[data-baseweb="tab"] p, button[data-baseweb="tab"] span {
+        color: inherit !important;
+        font-weight: inherit !important;
+    }
+
+    /* --- ENHANCED BUTTON STYLING --- */
+    .stButton > button, div[data-testid="stButton"] > button, .stDownloadButton > button {
+        background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px !important;
+        padding: 0.55rem 1.25rem !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
+        transition: all 0.25s ease !important;
+    }
+    .stButton > button:hover, div[data-testid="stButton"] > button:hover, .stDownloadButton > button:hover {
+        background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%) !important;
+        color: #ffffff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6) !important;
+        border-color: rgba(255, 255, 255, 0.4) !important;
+    }
+    .stButton > button:active, div[data-testid="stButton"] > button:active {
+        transform: translateY(0px) !important;
+    }
+    .stButton > button p, div[data-testid="stButton"] > button p {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+
+    /* --- INPUT FIELDS & LABELS --- */
+    div[data-baseweb="input"], div[data-baseweb="base-input"], input[type="text"], input[type="password"] {
+        background-color: #1e293b !important;
+        color: #f8fafc !important;
+        border: 1px solid #475569 !important;
+        border-radius: 8px !important;
+    }
+    div[data-baseweb="input"] input {
+        color: #f8fafc !important;
+        background-color: transparent !important;
+    }
+    input::placeholder {
+        color: #94a3b8 !important;
+    }
+    label[data-testid="stWidgetLabel"], .stTextInput label, .stSelectbox label, .stSlider label {
+        color: #f1f5f9 !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+    }
+    label[data-testid="stWidgetLabel"] p {
+        color: #f1f5f9 !important;
+        font-weight: 600 !important;
+    }
+
+    /* --- SELECTBOXES & DROPDOWNS --- */
+    div[data-baseweb="select"] > div {
+        background-color: #1e293b !important;
+        color: #f8fafc !important;
+        border-color: #475569 !important;
+        border-radius: 8px !important;
+    }
+    div[data-baseweb="select"] span {
+        color: #f8fafc !important;
+    }
+    div[data-baseweb="popover"], ul[role="listbox"] {
+        background-color: #1e293b !important;
+        border: 1px solid #475569 !important;
+        color: #f8fafc !important;
+    }
+    li[role="option"] {
+        color: #f8fafc !important;
+        background-color: #1e293b !important;
+    }
+    li[role="option"]:hover, li[aria-selected="true"] {
+        background-color: #334155 !important;
+        color: #38bdf8 !important;
+    }
+
+    /* --- SIDEBAR STYLING --- */
+    section[data-testid="stSidebar"] {
+        background-color: #0f172a !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
+        color: #f8fafc !important;
+    }
+    section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] span {
+        color: #cbd5e1 !important;
+    }
+
+    /* --- SLIDERS --- */
+    div[data-testid="stSlider"] [data-testid="stTickBarMin"],
+    div[data-testid="stSlider"] [data-testid="stTickBarMax"],
+    div[data-testid="stSlider"] span {
+        color: #94a3b8 !important;
+    }
+
+    /* --- GENERAL TEXT VISIBILITY --- */
+    .stMarkdown, .stMarkdown p, .stCaption, small, p {
+        color: #e2e8f0;
+    }
+    .stCaption, small {
+        color: #94a3b8 !important;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #f8fafc !important;
     }
 </style>
 """, unsafe_allow_html=True)

@@ -159,7 +159,7 @@ if __name__ == "__main__":
     insights = generate_business_insights(top_lift.head(5))
     print("\n--- TRANSLATED BUSINESS INSIGHTS ---")
     for ins in insights:
-        print(f"• {ins['insight']}")
+        print(f"- {ins['insight']}")
         print(f"  --> {ins['actionable_recommendation']}\n")
         
     country_seg = run_country_segment_analysis()

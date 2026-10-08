@@ -1,15 +1,14 @@
 """
 Strictly Formal 3-Page PDF Generator for Market Basket Analysis Project Proposal using ReportLab.
 Authors: Tanaya Salunke & Sankhya Londhe
-Design: Strictly formal monochrome (black/dark text), structured academic layout, 100% complete technical detail.
-Enforces EXACTLY 3 PAGES via controlled layout flow and PageBreak statements.
+Design: Tight professional line spacing, readable font typography (8.5pt body), zero loose gaps.
+Enforces EXACTLY 3 PAGES.
 """
 
 import os
 import sys
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
-from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
@@ -42,21 +41,21 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (Pages 2 & 3)
         if self._pageNumber > 1:
-            self.drawString(40, letter[1] - 28, "PROJECT PROPOSAL: SCALABLE MARKET BASKET ANALYSIS SYSTEM")
-            self.drawRightString(letter[0] - 40, letter[1] - 28, "TANAYA SALUNKE & SANKHYA LONDHE")
+            self.drawString(36, letter[1] - 26, "PROJECT PROPOSAL: SCALABLE MARKET BASKET ANALYSIS SYSTEM")
+            self.drawRightString(letter[0] - 36, letter[1] - 26, "TANAYA SALUNKE & SANKHYA LONDHE")
             self.setStrokeColor(colors.HexColor("#111111"))
             self.setLineWidth(0.75)
-            self.line(40, letter[1] - 32, letter[0] - 40, letter[1] - 32)
+            self.line(36, letter[1] - 30, letter[0] - 36, letter[1] - 30)
             
         # Footer (All Pages)
         self.setStrokeColor(colors.HexColor("#111111"))
         self.setLineWidth(0.75)
-        self.line(40, 36, letter[0] - 40, 36)
+        self.line(36, 32, letter[0] - 36, 32)
         
         self.setFont("Helvetica", 8)
-        self.drawString(40, 24, "Department of Computer Science | Academic Project Proposal")
+        self.drawString(36, 20, "Department of Computer Science | Academic Project Proposal")
         page_text = f"Page {self._pageNumber} of {page_count}"
-        self.drawRightString(letter[0] - 40, 24, page_text)
+        self.drawRightString(letter[0] - 36, 20, page_text)
         self.restoreState()
 
 
@@ -65,38 +64,38 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
     doc = SimpleDocTemplate(
         output_filename,
         pagesize=letter,
-        leftMargin=40,
-        rightMargin=40,
-        topMargin=36,
-        bottomMargin=42
+        leftMargin=36,
+        rightMargin=36,
+        topMargin=32,
+        bottomMargin=36
     )
 
     styles = getSampleStyleSheet()
     
-    # Strictly Formal Palette: Black and Dark Gray Text
+    # Strictly Formal Monochrome Palette
     c_black = colors.HexColor("#111111")
-    c_dark_gray = colors.HexColor("#333333")
-    c_light_bg = colors.HexColor("#F5F5F5")
+    c_dark_gray = colors.HexColor("#2C2C2C")
+    c_light_bg = colors.HexColor("#F6F6F6")
     c_border = colors.HexColor("#222222")
 
     title_style = ParagraphStyle(
         "DocTitle",
         parent=styles["Heading1"],
         fontName="Helvetica-Bold",
-        fontSize=15,
-        leading=18,
+        fontSize=14,
+        leading=16.5,
         textColor=c_black,
-        spaceAfter=2
+        spaceAfter=1
     )
 
     subtitle_style = ParagraphStyle(
         "DocSubTitle",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=9.5,
-        leading=12,
+        fontSize=9,
+        leading=11,
         textColor=c_dark_gray,
-        spaceAfter=5
+        spaceAfter=3
     )
 
     h1_style = ParagraphStyle(
@@ -104,10 +103,10 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         parent=styles["Heading1"],
         fontName="Helvetica-Bold",
         fontSize=10,
-        leading=12.5,
+        leading=12,
         textColor=c_black,
-        spaceBefore=6,
-        spaceAfter=2.5,
+        spaceBefore=4,
+        spaceAfter=2,
         keepWithNext=True
     )
 
@@ -118,8 +117,8 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         fontSize=8.5,
         leading=10.5,
         textColor=c_dark_gray,
-        spaceBefore=4,
-        spaceAfter=2,
+        spaceBefore=3,
+        spaceAfter=1.5,
         keepWithNext=True
     )
 
@@ -127,32 +126,32 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         "Body_Custom",
         parent=styles["Normal"],
         fontName="Helvetica",
-        fontSize=7.8,
-        leading=10,
+        fontSize=8.2,
+        leading=10.5,
         textColor=c_dark_gray,
-        spaceAfter=3.5
+        spaceAfter=2.5
     )
 
     bullet_style = ParagraphStyle(
         "Bullet_Custom",
         parent=body_style,
-        leftIndent=9,
-        firstLineIndent=-5,
-        spaceAfter=2
+        leftIndent=8,
+        firstLineIndent=-4,
+        spaceAfter=1.5
     )
 
     table_cell_style = ParagraphStyle(
-        "TableCell", parent=styles["Normal"], fontName="Helvetica", fontSize=7.2, leading=9, textColor=c_dark_gray
+        "TableCell", parent=styles["Normal"], fontName="Helvetica", fontSize=7.5, leading=9.2, textColor=c_dark_gray
     )
     table_cell_bold = ParagraphStyle(
         "TableCellBold", parent=table_cell_style, fontName="Helvetica-Bold", textColor=c_black
     )
     table_header_style = ParagraphStyle(
-        "TableHeader", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=7.5, leading=9.5, textColor=colors.white
+        "TableHeader", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=7.8, leading=9.5, textColor=colors.white
     )
 
     code_style = ParagraphStyle(
-        "CodeStyle", parent=styles["Normal"], fontName="Courier", fontSize=6.5, leading=8, textColor=c_black
+        "CodeStyle", parent=styles["Normal"], fontName="Courier", fontSize=6.8, leading=8.2, textColor=c_black
     )
 
     story = []
@@ -162,7 +161,7 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
     # =========================================================================
     story.append(Paragraph("ACADEMIC PROJECT PROPOSAL DOCUMENT", subtitle_style))
     story.append(Paragraph("Scalable Market Basket Analysis & Product Cross-Selling System", title_style))
-    story.append(HRFlowable(width="100%", thickness=1.5, color=c_black, spaceBefore=2, spaceAfter=5))
+    story.append(HRFlowable(width="100%", thickness=1.2, color=c_black, spaceBefore=1, spaceAfter=3))
 
     meta_data = [
         [Paragraph("<b>Project Authors:</b>", body_style), Paragraph("<b>Tanaya Salunke</b> & <b>Sankhya Londhe</b>", body_style),
@@ -170,16 +169,16 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         [Paragraph("<b>Primary Dataset:</b>", body_style), Paragraph("Online Retail II (1,067,371 Raw Records)", body_style),
          Paragraph("<b>Core Stack:</b>", body_style), Paragraph("Python, SciPy, PySpark, Streamlit, Plotly", body_style)]
     ]
-    t_meta = Table(meta_data, colWidths=[80, 186, 85, 181])
+    t_meta = Table(meta_data, colWidths=[85, 185, 85, 185])
     t_meta.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), c_light_bg),
-        ('PADDING', (0,0), (-1,-1), 3),
+        ('PADDING', (0,0), (-1,-1), 2.5),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('BOX', (0,0), (-1,-1), 0.75, c_border),
         ('INNERGRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CCCCCC")),
     ]))
     story.append(t_meta)
-    story.append(Spacer(1, 3))
+    story.append(Spacer(1, 2))
 
     # 1. Executive Summary & Problem Motivation
     story.append(Paragraph("1. Executive Summary & Project Background", h1_style))
@@ -218,19 +217,19 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
          Paragraph("<b></b>", body_style),
          Paragraph("<b>Association Rule Filter</b><br/>Computes Lift/Confidence; prunes Lift &lt; 1.2", code_style)]
     ]
-    t_ascii = Table(arch_summary_box, colWidths=[160, 16, 170, 16, 170])
+    t_ascii = Table(arch_summary_box, colWidths=[165, 15, 175, 15, 170])
     t_ascii.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), c_light_bg),
         ('ALIGN', (0,0), (-1,-1), 'CENTER'),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('TOPPADDING', (0,0), (-1,-1), 2),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 2),
+        ('TOPPADDING', (0,0), (-1,-1), 1.5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1.5),
         ('LEFTPADDING', (0,0), (-1,-1), 2),
         ('RIGHTPADDING', (0,0), (-1,-1), 2),
         ('BOX', (0,0), (-1,-1), 0.75, c_border),
     ]))
     story.append(t_ascii)
-    story.append(Spacer(1, 3))
+    story.append(Spacer(1, 2))
 
     arch_table_data = [
         [Paragraph("Pipeline Layer", table_header_style), Paragraph("Technical File", table_header_style), Paragraph("Functional Role & System Transformation", table_header_style)],
@@ -242,12 +241,12 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         [Paragraph("<b>Stage 6: Scalability</b>", table_cell_bold), Paragraph("<code>src/scalability.py</code><br/><code>src/pyspark_fpgrowth.py</code>", table_cell_style), Paragraph("Out-of-core 50k-row chunk stream processor & PySpark MLlib distributed cluster mapping.", table_cell_style)],
         [Paragraph("<b>Stage 7: Web App</b>", table_cell_bold), Paragraph("<code>app/streamlit_app.py</code>", table_cell_style), Paragraph("Dark neon glassmorphism UI with Admin/User login, 3D Plotly visualizers & cross-sell lookup.", table_cell_style)]
     ]
-    t_arch = Table(arch_table_data, colWidths=[90, 125, 317])
+    t_arch = Table(arch_table_data, colWidths=[90, 125, 325])
     t_arch.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
@@ -278,17 +277,17 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         [Paragraph("<b>Testing & QA</b>", table_cell_bold), Paragraph("Pytest 8.4", table_cell_style), Paragraph("Automated unit test suite validating hygiene, encoding, mining, and rule generation logic.", table_cell_style)],
         [Paragraph("<b>Document Engine</b>", table_cell_bold), Paragraph("ReportLab 4.2", table_cell_style), Paragraph("Programmatic PDF generation engine for executive proposal and final report generation.", table_cell_style)]
     ]
-    t_tools = Table(tools_table_data, colWidths=[90, 125, 317])
+    t_tools = Table(tools_table_data, colWidths=[90, 125, 325])
     t_tools.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
     story.append(t_tools)
-    story.append(Spacer(1, 3))
+    story.append(Spacer(1, 2))
 
     # 4. Mathematical Methodology & Algorithm Mechanics
     story.append(Paragraph("4. Theoretical Methodology & Algorithmic Mechanics", h1_style))
@@ -310,12 +309,12 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         [Paragraph("<b>Runtime (Supp = 0.015)</b>", table_cell_bold), Paragraph("18.42 seconds (High CPU overhead).", table_cell_style), Paragraph("<b>1.12 seconds (16.4x speedup)</b>.", table_cell_style)],
         [Paragraph("<b>Peak RAM Footprint</b>", table_cell_bold), Paragraph("142 MB (Candidate itemset buffer).", table_cell_style), Paragraph("<b>18.4 MB (Compact tree memory footprint)</b>.", table_cell_style)]
     ]
-    t_algo = Table(algo_comp_data, colWidths=[105, 210, 217])
+    t_algo = Table(algo_comp_data, colWidths=[105, 215, 220])
     t_algo.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
@@ -345,17 +344,17 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
         [Paragraph("<code>app/streamlit_app.py</code>", table_cell_bold), Paragraph("Dark neon UI with Admin/User auth, 3D Plotly rule topology, & cross-sell tool.", table_cell_style), Paragraph("Interactive web application running on <code>http://localhost:8501</code>", table_cell_style)],
         [Paragraph("<code>tests/test_pipeline.py</code>", table_cell_bold), Paragraph("Pytest automated unit test suite covering hygiene, encoding, mining, rules.", table_cell_style), Paragraph("100% passing automated test suite (4/4 tests passed)", table_cell_style)]
     ]
-    t_files = Table(files_table_data, colWidths=[110, 220, 202])
+    t_files = Table(files_table_data, colWidths=[110, 225, 205])
     t_files.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
     story.append(t_files)
-    story.append(Spacer(1, 3))
+    story.append(Spacer(1, 2))
 
     # 6. Work Plan & Phase-Wise Milestones
     story.append(Paragraph("6. Work Plan & Phase-Wise Milestones", h1_style))

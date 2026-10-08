@@ -1,7 +1,7 @@
 """
 10+ Page Master Technical Report PDF Generator for Market Basket Analysis System.
 Authors: Tanaya Salunke & Sankhya Londhe
-Design: Strictly formal academic layout, 100% complete technical depth across 10+ extensive chapters.
+Design: Tight professional line spacing, readable typography (8.5pt body text), crisp formal format, zero loose gaps.
 """
 
 import os
@@ -40,21 +40,21 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (Pages 2+)
         if self._pageNumber > 1:
-            self.drawString(40, letter[1] - 28, "FINAL TECHNICAL REPORT: MARKET BASKET ANALYSIS SYSTEM")
-            self.drawRightString(letter[0] - 40, letter[1] - 28, "TANAYA SALUNKE & SANKHYA LONDHE")
+            self.drawString(36, letter[1] - 26, "FINAL TECHNICAL REPORT: MARKET BASKET ANALYSIS SYSTEM")
+            self.drawRightString(letter[0] - 36, letter[1] - 26, "TANAYA SALUNKE & SANKHYA LONDHE")
             self.setStrokeColor(colors.HexColor("#111111"))
             self.setLineWidth(0.75)
-            self.line(40, letter[1] - 32, letter[0] - 40, letter[1] - 32)
+            self.line(36, letter[1] - 30, letter[0] - 36, letter[1] - 30)
             
         # Footer (All Pages)
         self.setStrokeColor(colors.HexColor("#111111"))
         self.setLineWidth(0.75)
-        self.line(40, 36, letter[0] - 40, 36)
+        self.line(36, 32, letter[0] - 36, 32)
         
         self.setFont("Helvetica", 8)
-        self.drawString(40, 24, "Department of Computer Science | Final Honors Technical Report")
+        self.drawString(36, 20, "Department of Computer Science | Final Honors Technical Report")
         page_text = f"Page {self._pageNumber} of {page_count}"
-        self.drawRightString(letter[0] - 40, 24, page_text)
+        self.drawRightString(letter[0] - 36, 20, page_text)
         self.restoreState()
 
 
@@ -63,46 +63,46 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     doc = SimpleDocTemplate(
         output_filename,
         pagesize=letter,
-        leftMargin=40,
-        rightMargin=40,
-        topMargin=36,
-        bottomMargin=42
+        leftMargin=36,
+        rightMargin=36,
+        topMargin=32,
+        bottomMargin=36
     )
 
     styles = getSampleStyleSheet()
     
-    # Strictly Formal Palette: Black and Dark Gray Text
+    # Strictly Formal Monochrome Palette
     c_black = colors.HexColor("#111111")
-    c_dark_gray = colors.HexColor("#333333")
-    c_light_bg = colors.HexColor("#F5F5F5")
+    c_dark_gray = colors.HexColor("#2C2C2C")
+    c_light_bg = colors.HexColor("#F6F6F6")
     c_border = colors.HexColor("#222222")
 
     title_style = ParagraphStyle(
-        "DocTitle", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=18, leading=22, textColor=c_black, spaceAfter=2
+        "DocTitle", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=16, leading=19, textColor=c_black, spaceAfter=2
     )
     subtitle_style = ParagraphStyle(
-        "DocSubTitle", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=10, leading=13, textColor=c_dark_gray, spaceAfter=6
+        "DocSubTitle", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=9.5, leading=12, textColor=c_dark_gray, spaceAfter=4
     )
     h1_style = ParagraphStyle(
-        "Heading1_Custom", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=11, leading=14, textColor=c_black, spaceBefore=12, spaceAfter=4, keepWithNext=True
+        "Heading1_Custom", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=10.5, leading=13, textColor=c_black, spaceBefore=6, spaceAfter=2.5, keepWithNext=True
     )
     h2_style = ParagraphStyle(
-        "Heading2_Custom", parent=styles["Heading2"], fontName="Helvetica-Bold", fontSize=9.5, leading=12, textColor=c_dark_gray, spaceBefore=8, spaceAfter=3, keepWithNext=True
+        "Heading2_Custom", parent=styles["Heading2"], fontName="Helvetica-Bold", fontSize=9, leading=11, textColor=c_dark_gray, spaceBefore=4, spaceAfter=2, keepWithNext=True
     )
     body_style = ParagraphStyle(
-        "Body_Custom", parent=styles["Normal"], fontName="Helvetica", fontSize=8.5, leading=11.5, textColor=c_dark_gray, spaceAfter=5
+        "Body_Custom", parent=styles["Normal"], fontName="Helvetica", fontSize=8.3, leading=10.8, textColor=c_dark_gray, spaceAfter=3
     )
     bullet_style = ParagraphStyle(
-        "Bullet_Custom", parent=body_style, leftIndent=12, firstLineIndent=-6, spaceAfter=3
+        "Bullet_Custom", parent=body_style, leftIndent=10, firstLineIndent=-5, spaceAfter=2
     )
     table_cell_style = ParagraphStyle(
-        "TableCell", parent=styles["Normal"], fontName="Helvetica", fontSize=7.5, leading=9.5, textColor=c_dark_gray
+        "TableCell", parent=styles["Normal"], fontName="Helvetica", fontSize=7.5, leading=9.2, textColor=c_dark_gray
     )
     table_cell_bold = ParagraphStyle(
         "TableCellBold", parent=table_cell_style, fontName="Helvetica-Bold", textColor=c_black
     )
     table_header_style = ParagraphStyle(
-        "TableHeader", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=8, leading=10, textColor=colors.white
+        "TableHeader", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=7.8, leading=9.5, textColor=colors.white
     )
 
     story = []
@@ -112,7 +112,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     # =========================================================================
     story.append(Paragraph("FINAL TECHNICAL REPORT & SYSTEM ARCHITECTURE EVALUATION", subtitle_style))
     story.append(Paragraph("Scalable Market Basket Analysis & Product Cross-Selling System", title_style))
-    story.append(HRFlowable(width="100%", thickness=1.5, color=c_black, spaceBefore=4, spaceAfter=8))
+    story.append(HRFlowable(width="100%", thickness=1.2, color=c_black, spaceBefore=2, spaceAfter=5))
 
     meta_data = [
         [Paragraph("<b>Authors / Team Members:</b>", body_style), Paragraph("<b>Tanaya Salunke</b> & <b>Sankhya Londhe</b>", body_style),
@@ -122,16 +122,16 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<b>Core Stack:</b>", body_style), Paragraph("Python, SciPy Sparse, PySpark, Streamlit, Plotly, Pytest", body_style),
          Paragraph("<b>Report Date:</b>", body_style), Paragraph("October 2026", body_style)]
     ]
-    t_meta = Table(meta_data, colWidths=[100, 166, 100, 166])
+    t_meta = Table(meta_data, colWidths=[105, 165, 105, 165])
     t_meta.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), c_light_bg),
-        ('PADDING', (0,0), (-1,-1), 4),
+        ('PADDING', (0,0), (-1,-1), 3),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ('BOX', (0,0), (-1,-1), 0.75, c_border),
         ('INNERGRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CCCCCC")),
     ]))
     story.append(t_meta)
-    story.append(Spacer(1, 6))
+    story.append(Spacer(1, 3))
 
     story.append(Paragraph("1. Executive Summary & Project Background", h1_style))
     story.append(Paragraph(
@@ -205,17 +205,17 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<code>CustomerID</code>", table_cell_bold), Paragraph("Float / String", table_cell_style), Paragraph("String", table_cell_style), Paragraph("Unique buyer ID. Preserved for customer-level cross-selling validation.", table_cell_style)],
         [Paragraph("<code>Country</code>", table_cell_bold), Paragraph("Object / String", table_cell_style), Paragraph("String", table_cell_style), Paragraph("Geographic purchasing origin (43 distinct countries in raw dataset).", table_cell_style)]
     ]
-    t_sch = Table(schema_data, colWidths=[80, 70, 70, 312])
+    t_sch = Table(schema_data, colWidths=[80, 70, 70, 320])
     t_sch.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
     story.append(t_sch)
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
 
     story.append(Paragraph("2.2 5-Stage Data Ingestion & Hygiene Audit", h2_style))
     story.append(Paragraph("The data pipeline ingested raw multi-sheet Excel records and applied five strict cleaning filters:", body_style))
@@ -228,12 +228,12 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<b>Price & Qty Audit</b>", table_cell_bold), Paragraph("1,043,495", table_cell_style), Paragraph("1,041,670", table_cell_style), Paragraph("1,825", table_cell_style), Paragraph("Removed zero or negative quantities (Quantity <= 0) and prices.", table_cell_style)],
         [Paragraph("<b>Service Code Filter</b>", table_cell_bold), Paragraph("1,041,670", table_cell_style), Paragraph("1,036,154", table_cell_style), Paragraph("5,516", table_cell_style), Paragraph("Stripped POSTAGE, MANUAL, BANK CHARGES, CRUK, TEST001, ADJUST fees.", table_cell_style)]
     ]
-    t_hyg = Table(hygiene_table_data, colWidths=[90, 60, 60, 65, 257])
+    t_hyg = Table(hygiene_table_data, colWidths=[90, 60, 60, 65, 265])
     t_hyg.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
@@ -276,12 +276,12 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<b>Peak Memory Footprint</b>", table_cell_bold), Paragraph("210.27 Megabytes", table_cell_style), Paragraph("4.72 Megabytes", table_cell_style), Paragraph("<b>97.7% RAM savings</b> 🏆", table_cell_style)],
         [Paragraph("<b>Matrix Sparsity Rate</b>", table_cell_bold), Paragraph("99.529%", table_cell_style), Paragraph("99.529%", table_cell_style), Paragraph("SciPy `indptr` & `indices` array indexing", table_cell_style)]
     ]
-    t_mat = Table(matrix_metrics, colWidths=[120, 130, 135, 147])
+    t_mat = Table(matrix_metrics, colWidths=[120, 135, 135, 150])
     t_mat.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 3),
+        ('PADDING', (0,0), (-1,-1), 2.5),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
@@ -313,12 +313,12 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<b>0.030 (3.0%)</b>", table_cell_bold), Paragraph("91 itemsets", table_cell_style), Paragraph("1.84 seconds", table_cell_style), Paragraph("<b>0.18 seconds</b>", table_cell_style), Paragraph("<b>10.2x Faster</b> 🏆", table_cell_style)],
         [Paragraph("<b>0.050 (5.0%)</b>", table_cell_bold), Paragraph("20 itemsets", table_cell_style), Paragraph("0.52 seconds", table_cell_style), Paragraph("<b>0.08 seconds</b>", table_cell_style), Paragraph("<b>6.5x Faster</b> 🏆", table_cell_style)]
     ]
-    t_bench = Table(bench_data, colWidths=[80, 110, 110, 110, 122])
+    t_bench = Table(bench_data, colWidths=[80, 110, 110, 110, 130])
     t_bench.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
@@ -356,12 +356,12 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("ALARM CLOCK BAKELIKE RED", table_cell_style), Paragraph("ALARM CLOCK BAKELIKE GREEN", table_cell_style), Paragraph("2.12%", table_cell_style), Paragraph("65.67%", table_cell_style), Paragraph("<b>19.04x</b>", table_cell_style), Paragraph("0.0201", table_cell_style), Paragraph("2.81", table_cell_style)],
         [Paragraph("SPACEBOY LUNCH BOX", table_cell_style), Paragraph("DOLLY GIRL LUNCH BOX", table_cell_style), Paragraph("2.10%", table_cell_style), Paragraph("62.19%", table_cell_style), Paragraph("<b>17.96x</b>", table_cell_style), Paragraph("0.0198", table_cell_style), Paragraph("2.55", table_cell_style)]
     ]
-    t_rules = Table(rules_table, colWidths=[110, 110, 48, 55, 60, 48, 41])
+    t_rules = Table(rules_table, colWidths=[115, 115, 50, 60, 65, 50, 45])
     t_rules.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (2,0), (-1,-1), 'CENTER'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
@@ -458,17 +458,17 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<code>src/xai_explainer.py</code>", table_cell_bold), Paragraph("<code>explain_rule_waterfall()</code>", table_cell_style), Paragraph("Decomposes confidence into baseline P(Y) vs Lift boost using Plotly Waterfall.", table_cell_style)],
         [Paragraph("<code>app/streamlit_app.py</code>", table_cell_bold), Paragraph("<code>main()</code> (Streamlit UI)", table_cell_style), Paragraph("Dark neon UI with Admin/User auth, 3D Plotly rule topology, & cross-sell tool.", table_cell_style)]
     ]
-    t_src = Table(source_code_table, colWidths=[110, 130, 292])
+    t_src = Table(source_code_table, colWidths=[110, 130, 300])
     t_src.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
     story.append(t_src)
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
 
     story.append(Paragraph("Chapter 10: Quality Assurance & Automated Pytest Suite", h1_style))
     story.append(Paragraph("The system is fully validated by an automated unit test suite passing with a **100% success rate (4/4 tests passed)**:", body_style))
@@ -480,17 +480,17 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
         [Paragraph("<code>test_frequent_itemsets()</code>", table_cell_bold), Paragraph("Mining Engine (`src/frequent_mining.py`)", table_cell_style), Paragraph("Verifies FP-Growth itemset count matches Apriori count at min_support = 0.03.", table_cell_style), Paragraph("<b>PASSED</b> ✅", table_cell_bold)],
         [Paragraph("<code>test_rule_pruning()</code>", table_cell_bold), Paragraph("Rule Generator (`src/rule_generator.py`)", table_cell_style), Paragraph("Asserts that 100% of pruned rules satisfy Lift >= 1.2 and Confidence >= 0.5.", table_cell_style), Paragraph("<b>PASSED</b> ✅", table_cell_bold)]
     ]
-    t_tst = Table(pytest_table, colWidths=[110, 110, 240, 72])
+    t_tst = Table(pytest_table, colWidths=[110, 110, 245, 75])
     t_tst.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_black),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('PADDING', (0,0), (-1,-1), 2.5),
+        ('PADDING', (0,0), (-1,-1), 2),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_light_bg]),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
     ]))
     story.append(t_tst)
-    story.append(Spacer(1, 6))
+    story.append(Spacer(1, 4))
 
     story.append(Paragraph("11. Academic References & Citations", h1_style))
     story.append(Paragraph("1. Agrawal, R., & Srikant, R. (1994). <i>Fast Algorithms for Mining Association Rules in Large Databases</i>. Proc. 20th International Conference on Very Large Data Bases (VLDB), 487–499.", bullet_style))

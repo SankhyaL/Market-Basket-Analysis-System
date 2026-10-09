@@ -1,7 +1,8 @@
 """
 Strictly Formal 3-Page PDF Generator for Market Basket Analysis Project Proposal using ReportLab.
 Authors: Tanaya Salunke & Sankhya Londhe
-Design: Tight professional line spacing, readable font typography (8.5pt body), zero loose gaps.
+Project Guide / Supervisor: Prof. Shruti Agrawal
+Design: Tight professional line spacing, readable typography (8.2pt body), zero loose gaps.
 Enforces EXACTLY 3 PAGES.
 """
 
@@ -42,7 +43,7 @@ class NumberedCanvas(canvas.Canvas):
         # Header (Pages 2 & 3)
         if self._pageNumber > 1:
             self.drawString(36, letter[1] - 26, "PROJECT PROPOSAL: SCALABLE MARKET BASKET ANALYSIS SYSTEM")
-            self.drawRightString(letter[0] - 36, letter[1] - 26, "TANAYA SALUNKE & SANKHYA LONDHE")
+            self.drawRightString(letter[0] - 36, letter[1] - 26, "GUIDE: PROF. SHRUTI AGRAWAL | TANAYA S. & SANKHYA L.")
             self.setStrokeColor(colors.HexColor("#111111"))
             self.setLineWidth(0.75)
             self.line(36, letter[1] - 30, letter[0] - 36, letter[1] - 30)
@@ -53,7 +54,7 @@ class NumberedCanvas(canvas.Canvas):
         self.line(36, 32, letter[0] - 36, 32)
         
         self.setFont("Helvetica", 8)
-        self.drawString(36, 20, "Department of Computer Science | Academic Project Proposal")
+        self.drawString(36, 20, "Department of Computer Science | Guide: Prof. Shruti Agrawal")
         page_text = f"Page {self._pageNumber} of {page_count}"
         self.drawRightString(letter[0] - 36, 20, page_text)
         self.restoreState()
@@ -165,11 +166,11 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
 
     meta_data = [
         [Paragraph("<b>Project Authors:</b>", body_style), Paragraph("<b>Tanaya Salunke</b> & <b>Sankhya Londhe</b>", body_style),
-         Paragraph("<b>Academic Context:</b>", body_style), Paragraph("Honors Computer Science Senior Capstone", body_style)],
+         Paragraph("<b>Project Guide / Supervisor:</b>", body_style), Paragraph("<b>Prof. Shruti Agrawal</b>", body_style)],
         [Paragraph("<b>Primary Dataset:</b>", body_style), Paragraph("Online Retail II (1,067,371 Raw Records)", body_style),
-         Paragraph("<b>Core Stack:</b>", body_style), Paragraph("Python, SciPy, PySpark, Streamlit, Plotly", body_style)]
+         Paragraph("<b>Academic Context:</b>", body_style), Paragraph("Honors Computer Science Senior Capstone", body_style)]
     ]
-    t_meta = Table(meta_data, colWidths=[85, 185, 85, 185])
+    t_meta = Table(meta_data, colWidths=[85, 185, 110, 160])
     t_meta.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), c_light_bg),
         ('PADDING', (0,0), (-1,-1), 2.5),
@@ -184,11 +185,12 @@ def create_formal_3page_proposal_pdf(output_filename="reports/Project_Proposal_M
     story.append(Paragraph("1. Executive Summary & Project Background", h1_style))
     story.append(Paragraph(
         "In modern retail e-commerce, identifying customer purchasing patterns from large transactional datasets is essential for "
-        "optimizing product cross-selling, promotional bundling, and shelf arrangement. This project presents an enterprise-grade, "
-        "end-to-end <b>Market Basket Analysis (MBA)</b> and Product Cross-Selling system developed by <b>Tanaya Salunke</b> and <b>Sankhya Londhe</b>. "
-        "Utilizing the benchmark <b>Online Retail II dataset</b> (1,067,371 transaction rows across 2009–2011), the platform ingests raw sales logs, "
-        "executes data hygiene, encodes transactions using memory-efficient sparse boolean matrices (SciPy CSR), benchmarks pattern mining algorithms "
-        "(<b>Apriori vs. FP-Growth</b>), prunes misleading spurious rules, provides Explainable AI (XAI) feature attribution, and serves real-time recommendations via a role-authenticated web app.",
+        "optimizing product cross-selling, promotional bundling, and shelf arrangement. Developed under the supervision of <b>Prof. Shruti Agrawal</b>, "
+        "this project presents an enterprise-grade, end-to-end <b>Market Basket Analysis (MBA)</b> and Product Cross-Selling system authored by "
+        "<b>Tanaya Salunke</b> and <b>Sankhya Londhe</b>. Utilizing the benchmark <b>Online Retail II dataset</b> (1,067,371 transaction rows across 2009–2011), "
+        "the platform ingests raw sales logs, executes data hygiene, encodes transactions using memory-efficient sparse boolean matrices (SciPy CSR), "
+        "benchmarks pattern mining algorithms (<b>Apriori vs. FP-Growth</b>), prunes misleading spurious rules, provides Explainable AI (XAI) feature attribution, "
+        "and serves real-time recommendations via a role-authenticated web app.",
         body_style
     ))
 

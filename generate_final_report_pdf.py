@@ -1,7 +1,8 @@
 """
-10+ Page Master Technical Report PDF Generator for Market Basket Analysis System.
+Master Technical Report PDF Generator for Market Basket Analysis System with Formal Cover & Certificate Page.
 Authors: Tanaya Salunke & Sankhya Londhe
-Design: Tight professional line spacing, readable typography (8.5pt body text), crisp formal format, zero loose gaps.
+Project Guide / Supervisor: Prof. Shruti Agrawal
+Institution: Vidyalankar Institute of Technology (AY 2026-27)
 """
 
 import os
@@ -38,23 +39,23 @@ class NumberedCanvas(canvas.Canvas):
         self.setFont("Helvetica-Bold", 8)
         self.setFillColor(colors.HexColor("#111111"))
         
-        # Header (Pages 2+)
+        # Suppress Header/Footer on Page 1 (Cover & Certificate Page)
         if self._pageNumber > 1:
             self.drawString(36, letter[1] - 26, "FINAL TECHNICAL REPORT: MARKET BASKET ANALYSIS SYSTEM")
-            self.drawRightString(letter[0] - 36, letter[1] - 26, "TANAYA SALUNKE & SANKHYA LONDHE")
+            self.drawRightString(letter[0] - 36, letter[1] - 26, "GUIDE: PROF. SHRUTI AGRAWAL | TANAYA S. & SANKHYA L.")
             self.setStrokeColor(colors.HexColor("#111111"))
             self.setLineWidth(0.75)
             self.line(36, letter[1] - 30, letter[0] - 36, letter[1] - 30)
             
-        # Footer (All Pages)
-        self.setStrokeColor(colors.HexColor("#111111"))
-        self.setLineWidth(0.75)
-        self.line(36, 32, letter[0] - 36, 32)
-        
-        self.setFont("Helvetica", 8)
-        self.drawString(36, 20, "Department of Computer Science | Final Honors Technical Report")
-        page_text = f"Page {self._pageNumber} of {page_count}"
-        self.drawRightString(letter[0] - 36, 20, page_text)
+            self.setStrokeColor(colors.HexColor("#111111"))
+            self.setLineWidth(0.75)
+            self.line(36, 32, letter[0] - 36, 32)
+            
+            self.setFont("Helvetica", 8)
+            self.drawString(36, 20, "Department of Computer Science | Guide: Prof. Shruti Agrawal")
+            page_text = f"Page {self._pageNumber} of {page_count}"
+            self.drawRightString(letter[0] - 36, 20, page_text)
+            
         self.restoreState()
 
 
@@ -71,14 +72,61 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
 
     styles = getSampleStyleSheet()
     
-    # Strictly Formal Monochrome Palette
+    # Strictly Formal Monochrome & Accent Palette
     c_black = colors.HexColor("#111111")
     c_dark_gray = colors.HexColor("#2C2C2C")
+    c_red_accent = colors.HexColor("#C0392B")  # Matching formal red header accent from template
     c_light_bg = colors.HexColor("#F6F6F6")
     c_border = colors.HexColor("#222222")
 
+    # Cover Page Typography Styles
+    cover_title_style = ParagraphStyle(
+        "CoverTitle",
+        parent=styles["Heading1"],
+        fontName="Helvetica-Bold",
+        fontSize=18,
+        leading=22,
+        textColor=c_red_accent,
+        alignment=1,  # Center aligned
+        spaceAfter=4
+    )
+
+    cover_subtitle_style = ParagraphStyle(
+        "CoverSubTitle",
+        parent=styles["Normal"],
+        fontName="Helvetica-Bold",
+        fontSize=11,
+        leading=14,
+        textColor=c_black,
+        alignment=1,  # Center aligned
+        spaceAfter=12
+    )
+
+    cover_section_head = ParagraphStyle(
+        "CoverSectionHead",
+        parent=styles["Normal"],
+        fontName="Helvetica-Bold",
+        fontSize=12,
+        leading=15,
+        textColor=c_black,
+        alignment=1,  # Center aligned
+        spaceAfter=4
+    )
+
+    cover_cert_text = ParagraphStyle(
+        "CoverCertText",
+        parent=styles["Normal"],
+        fontName="Helvetica",
+        fontSize=9.5,
+        leading=14,
+        textColor=c_black,
+        alignment=1,  # Center aligned
+        spaceAfter=15
+    )
+
+    # Main Body Typography Styles
     title_style = ParagraphStyle(
-        "DocTitle", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=16, leading=19, textColor=c_black, spaceAfter=2
+        "DocTitle", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=15, leading=18, textColor=c_black, spaceAfter=2
     )
     subtitle_style = ParagraphStyle(
         "DocSubTitle", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=9.5, leading=12, textColor=c_dark_gray, spaceAfter=4
@@ -108,7 +156,63 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story = []
 
     # =========================================================================
-    # PAGE 1: TITLE & EXECUTIVE SUMMARY
+    # FRONT COVER & CERTIFICATE PAGE (EXACT FORMAT FROM ATTACHED SPECIFICATION)
+    # =========================================================================
+    story.append(Spacer(1, 15))
+    story.append(Paragraph("<u>Scalable Market Basket Analysis & Product Cross-Selling System</u>", cover_title_style))
+    story.append(Paragraph("-<br/><b>Subject – Honors Senior Capstone Project</b>", cover_subtitle_style))
+    story.append(Paragraph("–", cover_subtitle_style))
+    story.append(Spacer(1, 10))
+
+    # Student Details Table (Red accent names as in specification format)
+    students_table_data = [
+        [Paragraph("<b>Name of Student</b>", table_cell_bold), Paragraph("<b>Roll No.</b>", table_cell_bold)],
+        [Paragraph("<font color='#C0392B'><b>Tanaya Salunke</b></font>", table_cell_style), Paragraph("<font color='#C0392B'><b>Roll No 1</b></font>", table_cell_style)],
+        [Paragraph("<font color='#C0392B'><b>Sankhya Londhe</b></font>", table_cell_style), Paragraph("<font color='#C0392B'><b>Roll No 2</b></font>", table_cell_style)]
+    ]
+    t_students = Table(students_table_data, colWidths=[160, 100])
+    t_students.setStyle(TableStyle([
+        ('ALIGN', (0,0), (-1,-1), 'CENTER'),
+        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ('PADDING', (0,0), (-1,-1), 3),
+        ('BOX', (0,0), (-1,-1), 0.5, c_border),
+        ('INNERGRID', (0,0), (-1,-1), 0.5, colors.HexColor("#DDDDDD")),
+    ]))
+    story.append(t_students)
+    story.append(Spacer(1, 15))
+
+    # Supervisor Block
+    story.append(Paragraph("Supervisor", cover_subtitle_style))
+    story.append(Paragraph("<b>Prof. Shruti Agrawal</b>", cover_section_head))
+    story.append(Spacer(1, 15))
+
+    # Institution Block
+    story.append(Paragraph("<b>Vidyalankar Institute of Technology</b><br/>(AY 2026-27)<br/>Accredited A+ by NAAC", cover_subtitle_style))
+    story.append(Spacer(1, 20))
+
+    # Certificate Block
+    story.append(HRFlowable(width="80%", thickness=1, color=c_black, spaceBefore=4, spaceAfter=12))
+    story.append(Paragraph("<b>CERTIFICATE</b>", cover_section_head))
+    story.append(Spacer(1, 8))
+
+    cert_body = (
+        "This is to certify that the Senior Capstone Project entitled "
+        "“<b>Scalable Market Basket Analysis & Product Cross-Selling System</b>” is a bonafide work of "
+        "<font color='#C0392B'><b>Tanaya Salunke (Roll No 1)</b></font> and "
+        "<font color='#C0392B'><b>Sankhya Londhe (Roll No 2)</b></font> "
+        "carried out under the supervision of <b>Prof. Shruti Agrawal</b>."
+    )
+    story.append(Paragraph(cert_body, cover_cert_text))
+    story.append(Spacer(1, 25))
+
+    # Certificate Signature Block
+    story.append(Paragraph("<b>Prof. Shruti Agrawal</b><br/>Supervisor / Project Guide", cover_subtitle_style))
+    
+    # End of Front Cover Page
+    story.append(PageBreak())
+
+    # =========================================================================
+    # PAGE 2: TITLE & EXECUTIVE SUMMARY
     # =========================================================================
     story.append(Paragraph("FINAL TECHNICAL REPORT & SYSTEM ARCHITECTURE EVALUATION", subtitle_style))
     story.append(Paragraph("Scalable Market Basket Analysis & Product Cross-Selling System", title_style))
@@ -116,7 +220,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
 
     meta_data = [
         [Paragraph("<b>Authors / Team Members:</b>", body_style), Paragraph("<b>Tanaya Salunke</b> & <b>Sankhya Londhe</b>", body_style),
-         Paragraph("<b>Academic Context:</b>", body_style), Paragraph("Honors Computer Science Senior Capstone", body_style)],
+         Paragraph("<b>Project Guide / Supervisor:</b>", body_style), Paragraph("<b>Prof. Shruti Agrawal</b>", body_style)],
         [Paragraph("<b>Benchmark Dataset:</b>", body_style), Paragraph("Online Retail II (1,067,371 Raw Records)", body_style),
          Paragraph("<b>Cleaned Corpus:</b>", body_style), Paragraph("1,036,154 records | 39,517 invoices | 5,321 products", body_style)],
         [Paragraph("<b>Core Stack:</b>", body_style), Paragraph("Python, SciPy Sparse, PySpark, Streamlit, Plotly, Pytest", body_style),
@@ -135,11 +239,11 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
 
     story.append(Paragraph("1. Executive Summary & Project Background", h1_style))
     story.append(Paragraph(
-        "This comprehensive 10-chapter technical report presents the complete design, mathematical formulation, algorithmic evaluation, "
+        "This comprehensive technical report presents the complete design, mathematical formulation, algorithmic evaluation, "
         "and production deployment of the <b>Market Basket Analysis (MBA) & Cross-Selling Intelligence System</b> authored by "
-        "<b>Tanaya Salunke</b> and <b>Sankhya Londhe</b>. Operating on the benchmark <b>Online Retail II dataset</b> spanning two full operational years "
-        "(2009–2011), the platform processes 1,067,371 transaction logs to discover non-obvious product co-occurrence patterns, prune misleading "
-        "spurious associations, compute Explainable AI (XAI) feature attributions, and power a role-authenticated web application.",
+        "<b>Tanaya Salunke</b> and <b>Sankhya Londhe</b> under the guidance of <b>Prof. Shruti Agrawal</b>. Operating on the benchmark <b>Online Retail II dataset</b> "
+        "spanning two full operational years (2009–2011), the platform processes 1,067,371 transaction logs to discover non-obvious product co-occurrence patterns, "
+        "prune misleading spurious associations, compute Explainable AI (XAI) feature attributions, and power a role-authenticated web application.",
         body_style
     ))
     story.append(Paragraph("Summary of Core Technical Breakthroughs:", h2_style))
@@ -154,7 +258,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 2: CHAPTER 1 - RETAIL BUSINESS DOMAIN & PROBLEM MOTIVATION
+    # PAGE 3: CHAPTER 1 - RETAIL BUSINESS DOMAIN & PROBLEM MOTIVATION
     # =========================================================================
     story.append(Paragraph("Chapter 1: Retail Business Domain & Project Motivation", h1_style))
     story.append(Paragraph(
@@ -173,7 +277,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(Paragraph("5. <b>Spurious & Misleading Association Rules:</b> Standard rule generators surface rules with high confidence simply because the recommended product is globally popular (e.g. Toothpaste ➔ Bread). This misleads merchants into bundling products that sell independently anyway.", bullet_style))
 
     story.append(Paragraph("1.2 Strategic Business Goals", h2_style))
-    story.append(Paragraph("To solve these challenges, our project establishes five core commercial and technical objectives:", body_style))
+    story.append(Paragraph("To solve these challenges, our project establishes five core commercial and technical objectives under the guidance of Prof. Shruti Agrawal:", body_style))
     story.append(Paragraph("• <b>Automate End-to-End Analytics:</b> Build a self-contained data pipeline from raw Excel logs to pruned association rules.", bullet_style))
     story.append(Paragraph("• <b>Achieve Memory Efficiency:</b> Reduce matrix RAM footprint by over 90% using SciPy Compressed Sparse Row (CSR) encoding.", bullet_style))
     story.append(Paragraph("• <b>Benchmark Algorithmic Efficiency:</b> Quantify runtime speedups and memory scaling of FP-Growth versus Apriori.", bullet_style))
@@ -183,7 +287,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 3: CHAPTER 2 - DATASET SCHEMA & INGESTION HYGIENE
+    # PAGE 4: CHAPTER 2 - DATASET SCHEMA & INGESTION HYGIENE
     # =========================================================================
     story.append(Paragraph("Chapter 2: Dataset Schema & Ingestion Hygiene Methodology", h1_style))
     story.append(Paragraph(
@@ -242,7 +346,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 4: CHAPTER 3 - MATHEMATICAL FORMULATION & SPARSE ENCODING
+    # PAGE 5: CHAPTER 3 - MATHEMATICAL FORMULATION & SPARSE ENCODING
     # =========================================================================
     story.append(Paragraph("Chapter 3: Mathematical Formulation & Sparse Matrix Encoding", h1_style))
     story.append(Paragraph("3.1 The Dense Encoding Memory Problem", h2_style))
@@ -290,7 +394,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 5: CHAPTER 4 - FREQUENT PATTERN MINING: APRIORI VS FP-GROWTH
+    # PAGE 6: CHAPTER 4 - FREQUENT PATTERN MINING: APRIORI VS FP-GROWTH
     # =========================================================================
     story.append(Paragraph("Chapter 4: Frequent Pattern Mining Algorithms & Mechanics", h1_style))
     story.append(Paragraph(
@@ -327,7 +431,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 6: CHAPTER 5 - ASSOCIATION RULE MINING & SPURIOUS PRUNING
+    # PAGE 7: CHAPTER 5 - ASSOCIATION RULE MINING & SPURIOUS PRUNING
     # =========================================================================
     story.append(Paragraph("Chapter 5: Association Rule Mining & Spurious Rule Pruning", h1_style))
     story.append(Paragraph("5.1 Mathematical Formulations of Rule Metrics", h2_style))
@@ -370,7 +474,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 7: CHAPTER 6 - EXPLAINABLE AI (XAI) ATTRIBUTION ENGINE
+    # PAGE 8: CHAPTER 6 - EXPLAINABLE AI (XAI) ATTRIBUTION ENGINE
     # =========================================================================
     story.append(Paragraph("Chapter 6: Explainable AI (XAI) Feature Attribution Engine", h1_style))
     story.append(Paragraph(
@@ -398,7 +502,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 8: CHAPTER 7 - REGIONAL SEGMENTATION & MERCHANDISING
+    # PAGE 9: CHAPTER 7 - REGIONAL SEGMENTATION & MERCHANDISING
     # =========================================================================
     story.append(Paragraph("Chapter 7: Regional Segment Analysis & Merchandising Strategy", h1_style))
     story.append(Paragraph("7.1 International Market Purchasing Profiles", h2_style))
@@ -417,7 +521,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 9: CHAPTER 8 - OUT-OF-CORE SCALABILITY & PYSPARK
+    # PAGE 10: CHAPTER 8 - OUT-OF-CORE SCALABILITY & PYSPARK
     # =========================================================================
     story.append(Paragraph("Chapter 8: Out-of-Core Engine & PySpark Big Data Architecture", h1_style))
     story.append(Paragraph(
@@ -444,7 +548,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 10: CHAPTER 9 & 10 - SOURCE CODE, WEB UI & PYTEST QA
+    # PAGE 11: CHAPTER 9 & 10 - SOURCE CODE, WEB UI & PYTEST QA
     # =========================================================================
     story.append(Paragraph("Chapter 9: Software Architecture & Web UI Implementation", h1_style))
     story.append(Paragraph("9.1 Modular Source Code Layout", h2_style))
@@ -471,7 +575,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(Spacer(1, 3))
 
     story.append(Paragraph("Chapter 10: Quality Assurance & Automated Pytest Suite", h1_style))
-    story.append(Paragraph("The system is fully validated by an automated unit test suite passing with a **100% success rate (4/4 tests passed)**:", body_style))
+    story.append(Paragraph("The system is fully validated by an automated unit test suite passing with a **100% success rate (4/4 tests passed)** under the supervision of Prof. Shruti Agrawal:", body_style))
 
     pytest_table = [
         [Paragraph("Test Function", table_header_style), Paragraph("Tested Pipeline Stage", table_header_style), Paragraph("Test Assertion & Verification Logic", table_header_style), Paragraph("Result Status", table_header_style)],
@@ -499,7 +603,7 @@ def create_extensive_10page_report_pdf(output_filename="reports/Final_Report_Mar
     story.append(Paragraph("4. Raschka, S. (2018). <i>MLxtend: Providing machine learning and data science utilities and extensions to Python's scientific computing stack</i>. Journal of Open Source Software, 3(24), 638.", bullet_style))
 
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"Successfully generated 10-page master final report PDF: {output_filename}")
+    print(f"Successfully generated master final report PDF with Cover Page: {output_filename}")
 
 
 if __name__ == "__main__":
